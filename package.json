@@ -1,8 +1,12 @@
 {
   "name": "mizuki",
+  "description": "A plugin-in qq bot sdk",
   "version": "1.0.0",
   "main": "./src/index.ts",
   "types": "module",
+  "dependencies": {
+    "qb-sdk": "^1.0.7"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.13",
     "@types/node": "^22.7.7",
@@ -16,10 +20,22 @@
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "qb-sdk": "^1.0.7"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanasa2023/mizuki.git"
+  },
+  "author": "hanasaki",
+  "license": "MIT",
+  "homepage": "https://github.com/hanasa2023/mizuki#readme",
+  "bugs": {
+    "url": "https://github.com/hanasa2023/mizuki/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "nodejs",
+    "qq",
+    "bot"
+  ]
 }
