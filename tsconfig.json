@@ -9,16 +9,12 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "declaration": true,
-    "declarationDir": "./dist/types",
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "noEmit": false,
+    "noEmit": true,
     "allowJs": true,
     "paths": {
       "@src/*": ["src/*"]
