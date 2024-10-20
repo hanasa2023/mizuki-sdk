@@ -1,9 +1,12 @@
 {
   "name": "ena-mizuki",
   "description": "A plugin-in qq bot sdk",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "./src/index.ts",
   "types": "module",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "qb-sdk": "^1.0.7"
   },
@@ -17,18 +20,19 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hanasa2023/mizuki.git"
+    "url": "git+https://github.com/hanasa2023/ena-mizuki.git"
   },
   "author": "hanasaki",
   "license": "MIT",
-  "homepage": "https://github.com/hanasa2023/mizuki#readme",
+  "homepage": "https://github.com/hanasa2023/ena-mizuki#readme",
   "bugs": {
-    "url": "https://github.com/hanasa2023/mizuki/issues"
+    "url": "https://github.com/hanasa2023/ena-mizuki/issues"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
