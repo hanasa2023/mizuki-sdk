@@ -1,5 +1,5 @@
 {
-  "name": "mizuki",
+  "name": "ena-mizuki",
   "description": "A plugin-in qq bot sdk",
   "version": "1.0.0",
   "main": "./src/index.ts",
