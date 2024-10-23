@@ -1,26 +1,92 @@
-import { PluginData } from './types'
+import { Handler } from './types/plugin'
 import {
+  AvailableIntentsEventsEnum,
   Config,
   createOpenAPI,
   createWebsocket,
-  OpenAPI,
-  WebsocketClient,
+  GroupATData,
 } from 'qb-sdk'
-import { loadImplFromPackageJson } from './utils/plugin_loader'
+import { Plugins } from './plugins'
+import { FinishSessionError } from './errors'
+import BotLogger from 'node-color-log'
+import { GroupContext } from './contexts'
+import { Echo, GetMessageData } from './plugins/builtin-plugins'
+import { LogLevel } from './types'
 
-const impl = await loadImplFromPackageJson()
+BotLogger.setDate(() => new Date().toLocaleTimeString())
 
-class Server {
-  client: OpenAPI | null = null
-  ws: WebsocketClient | null = null
-  plugins: PluginData[] = []
-  run(botConfig: Config) {
-    this.client = createOpenAPI(botConfig)
-    this.ws = createWebsocket(botConfig)
-    this.plugins = impl.plugins
-    this.plugins.forEach((plugin: PluginData) => {
-      this.ws?.on(plugin.event, plugin.listener)
+export class Server {
+  handlers: Handler[] = []
+
+  useBuiltinPlugins(plugins: string[]) {
+    const builtinPlugins: Map<string, any> = new Map()
+    builtinPlugins.set('echo', Echo)
+    builtinPlugins.set('get_message_data', GetMessageData)
+    plugins.forEach((name: string) => {
+      if (builtinPlugins.has(name)) {
+        const PluginClass = builtinPlugins.get(name)
+        if (PluginClass) {
+          const pluginInstance = new PluginClass() as any
+          Plugins.registerPlugin(name, pluginInstance)
+        } else {
+          BotLogger.info(`没有${name}这个内置插件`)
+        }
+      } else {
+        BotLogger.info(`没有${name}这个内置插件`)
+      }
     })
+    return this
+  }
+
+  setLogLevel(level: LogLevel) {
+    BotLogger.setLevel(level)
+    return this
+  }
+
+  async run(botConfig: Config) {
+    // 创建client和websocket
+    const client = createOpenAPI(botConfig)
+    const ws = createWebsocket(botConfig)
+
+    this.handlers = Plugins.loadHandlers()
+
+    ws?.on(
+      AvailableIntentsEventsEnum.GROUP_AND_C2C_EVENT,
+      async (data: GroupATData) => {
+        try {
+          data.msg.content = data.msg.content.trim()
+          const groupContext: GroupContext = new GroupContext(data, client)
+
+          BotLogger.info('Start handler by priority 1..99')
+          for (const handler of this.handlers) {
+            const command = handler.metadata.command
+            const regexp = new RegExp(`^/${command}`)
+            if (command == '') {
+              BotLogger.info(`handled by ${handler.metadata.pluginName}`)
+              await handler.listener(groupContext)
+            } else {
+              if (regexp.test(data.msg.content)) {
+                BotLogger.info(`handled by ${handler.metadata.pluginName}`)
+                groupContext.data.msg.content = groupContext.data.msg.content
+                  .replace(regexp, '')
+                  .trim()
+                await handler.listener(groupContext)
+                if (handler.metadata.block) {
+                  throw new FinishSessionError()
+                }
+              }
+            }
+          }
+          BotLogger.info('Stop handlers...')
+        } catch (e: any) {
+          if (e instanceof FinishSessionError) {
+            BotLogger.info('Stop handlers...')
+          } else {
+            BotLogger.error(e.message)
+          }
+        }
+      }
+    )
   }
 }
 

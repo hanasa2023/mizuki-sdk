@@ -3,9 +3,17 @@
     "experimentalDecorators": true /* Enable experimental support for legacy experimental decorators. */,
     "baseUrl": "./",
     "strict": true,
-    "lib": ["ESNext"],
-    // "typeRoots": ["src/types"],
-    // "types": ["node", "@types/jest"],
+    "lib": [
+      "ESNext"
+    ],
+    // "typeRoots": [
+    //   "src/types.ts"
+    // ],
+    // "types": [
+    //   "node",
+    //   "@types/jest"
+    // ],
+    // "importHelpers": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -13,20 +21,38 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "importHelpers": true,
+    // "outDir": "dist",
+    // "sourceMap": true,
+    // "declaration": true,
+    // "declarationDir": "dist",
+    "typeRoots": [
+      "./types"
+    ],
     "noEmit": true,
     "allowJs": true,
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": [
+        "src/*"
+      ]
     }
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".ts", "js"]
+        "extensions": [
+          ".ts",
+          "js"
+        ]
       }
     }
   },
-  "include": ["src", "test"],
-  "exclude": ["node_modules", "example"]
+  "include": [
+    "src",
+    "test"
+  ],
+  "exclude": [
+    "node_modules",
+    "example",
+    "test"
+  ]
 }

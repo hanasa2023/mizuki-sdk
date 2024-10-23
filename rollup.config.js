@@ -9,14 +9,14 @@ import typescript from '@rollup/plugin-typescript'
 
 const ENV = process.env.NODE_ENV
 const extensions = ['.ts', '.js']
-const external = []
+const external = ['ws', 'resty-client']
 
 export default [
   {
     input: 'src/index.ts',
     output: {
-      file: 'lib/index.esm.js',
-      format: 'esm',
+      file: 'lib/index.js',
+      format: 'cjs',
       sourcemap: ENV === 'dev',
     },
     plugins: [
