@@ -1,4 +1,4 @@
-![mizuki-sdk](https://socialify.git.ci/hanasa2023/mizuki-sdk/image?description=1&font=Jost&forks=1&issues=1&language=1&logo=https%3A%2F%2Fpicx.zhimg.com%2F80%2Fv2-bdae55043d61d7bcfeeabead6e953959_1440w.jpeg%3Fsource%3Dd16d100b&name=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
+![mizuki-sdk](https://socialify.git.ci/hanasa2023/mizuki-sdk/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Auto&logo=https%3A%2F%2Ffiles.catbox.moe%2F158u3w.jpg)
 
 <div align="center">
 
